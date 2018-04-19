@@ -12,11 +12,13 @@ CORS(server)
 
 df = pd.read_csv('vis_data.csv')
 df_3d = pd.read_csv('vis_data_3d.csv')
+df_siamese = pd.read_csv('vis_data_siamese.csv')
 
 unique_classes = df['categ'].unique()
 dis_dropdown_options = [{'label': str(i), 'value': str(i)} for i in unique_classes]
 
-tabs = [{'label': '2D Visualization', 'value': 1}, {'label': '3D Visualization', 'value': 2}]
+tabs = [{'label': '2D Visualization', 'value': 1}, {'label': '3D Visualization', 'value': 2},
+        {'label': '2D Siamese Visualization', 'value': 3}]
 
 app.layout = html.Div([
     html.H1(
@@ -76,7 +78,7 @@ def update_figure(dis_dropdown_values, tabs_value):
                 hoverinfo='text'
             )
         ]
-    else:
+    elif(tabs_value == 2):
         dff = df_3d[df_3d['categ'].isin(dis_dropdown_values)]
         data = [
             go.Scatter3d(
@@ -87,6 +89,23 @@ def update_figure(dis_dropdown_values, tabs_value):
                 mode='markers',
                 opacity=0.7,
                 marker={
+                    'color' : dff['color'],
+                },
+                hoverinfo='text'
+            )
+        ]
+    else:
+        dff = df_siamese[df_siamese['categ'].isin(dis_dropdown_values)]
+        data = [
+            go.Scatter(
+                x=dff['X'],
+                y=dff['Y'],
+                text=dff['name'] + '<br>' + dff['categ'],
+                mode='markers',
+                opacity=0.8,
+                marker={
+                    'size': 12,
+                    'line': {'width': 0.5, 'color': 'white'},
                     'color' : dff['color'],
                 },
                 hoverinfo='text'
