@@ -121,7 +121,7 @@ def update_figure(dis_dropdown_values, tabs_value):
                 z=dff['Z'],
                 text=dff['name'] + '<br>' + dff['categ'],
                 mode='markers',
-                opacity=0.8,
+                opacity=0.9,
                 marker={
                     'color' : dff['color'],
                 },
