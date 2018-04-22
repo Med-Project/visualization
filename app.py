@@ -64,75 +64,83 @@ def update_figure(dis_dropdown_values, tabs_value):
     data = []
     if(tabs_value == 1):
         dff = df[df['categ'].isin(dis_dropdown_values)]
-        data = [
-            go.Scatter(
-                x=dff['X'],
-                y=dff['Y'],
-                text=dff['name'] + '<br>' + dff['categ'],
+        for categ in dff['categ'].unique():
+            dff_tmp = dff[dff['categ'] == categ]
+            data_tmp = go.Scatter(
+                x=dff_tmp['X'],
+                y=dff_tmp['Y'],
+                text=dff_tmp['name'] + '<br>' + dff_tmp['categ'],
                 mode='markers',
                 opacity=0.8,
                 marker={
                     'size': 12,
                     'line': {'width': 0.5, 'color': 'white'},
-                    'color' : dff['color'],
+                    'color' : dff_tmp['color'],
                 },
-                hoverinfo='text'
+                hoverinfo='text',
+                name = str(categ)
             )
-        ]
+            data.append(data_tmp)
     elif(tabs_value == 2):
         dff = df_3d[df_3d['categ'].isin(dis_dropdown_values)]
-        data = [
-            go.Scatter3d(
-                x=dff['X'],
-                y=dff['Y'],
-                z=dff['Z'],
-                text=dff['name'] + '<br>' + dff['categ'],
+        for categ in dff['categ'].unique():
+            dff_tmp = dff[dff['categ'] == categ]
+            data_tmp = go.Scatter3d(
+                x=dff_tmp['X'],
+                y=dff_tmp['Y'],
+                z=dff_tmp['Z'],
+                text=dff_tmp['name'] + '<br>' + dff_tmp['categ'],
                 mode='markers',
                 opacity=0.7,
                 marker={
-                    'color' : dff['color'],
+                    'color' : dff_tmp['color'],
                 },
-                hoverinfo='text'
+                hoverinfo='text',
+                name = str(categ)
             )
-        ]
+            data.append(data_tmp)
     elif(tabs_value == 3):
         dff = df_siamese[df_siamese['categ'].isin(dis_dropdown_values)]
-        data = [
-            go.Scatter(
-                x=dff['X'],
-                y=dff['Y'],
-                text=dff['name'] + '<br>' + dff['categ'],
+        for categ in dff['categ'].unique():
+            dff_tmp = dff[dff['categ'] == categ]
+            data_tmp = go.Scatter(
+                x=dff_tmp['X'],
+                y=dff_tmp['Y'],
+                text=dff_tmp['name'] + '<br>' + dff_tmp['categ'],
                 mode='markers',
                 opacity=0.8,
                 marker={
                     'size': 12,
                     'line': {'width': 0.5, 'color': 'white'},
-                    'color' : dff['color'],
+                    'color' : dff_tmp['color'],
                 },
-                hoverinfo='text'
+                hoverinfo='text',
+                name = str(categ)
             )
-        ]
+            data.append(data_tmp)
     else:
         dff = df_siamese_3d[df_siamese_3d['categ'].isin(dis_dropdown_values)]
-        data = [
-            go.Scatter3d(
-                x=dff['X'],
-                y=dff['Y'],
-                z=dff['Z'],
-                text=dff['name'] + '<br>' + dff['categ'],
+        for categ in dff['categ'].unique():
+            dff_tmp = dff[dff['categ'] == categ]
+            data_tmp = go.Scatter3d(
+                x=dff_tmp['X'],
+                y=dff_tmp['Y'],
+                z=dff_tmp['Z'],
+                text=dff_tmp['name'] + '<br>' + dff_tmp['categ'],
                 mode='markers',
                 opacity=0.9,
                 marker={
-                    'color' : dff['color'],
+                    'color' : dff_tmp['color'],
                 },
-                hoverinfo='text'
+                hoverinfo='text',
+                name = str(categ)
             )
-        ]
+            data.append(data_tmp)
     layout = go.Layout(
         title='Diseases map',
         height=700,
         margin={'l': 40, 'b': 40, 't': 100, 'r': 10},
-        legend={'x': 0, 'y': 1},
+        # legend={'x': -.1, 'y': 1.2},
         hovermode='closest'
     )
     return {'data': data, 'layout': layout}
