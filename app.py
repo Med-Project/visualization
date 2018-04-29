@@ -141,7 +141,13 @@ def update_figure(dis_dropdown_values, tabs_value):
         height=700,
         margin={'l': 40, 'b': 40, 't': 100, 'r': 10},
         # legend={'x': -.1, 'y': 1.2},
-        hovermode='closest'
+        hovermode='closest',
+        xaxis=dict(
+            title='Component 1'
+        ),
+        yaxis=dict(
+            title='Component 2'
+        )
     )
     return {'data': data, 'layout': layout}
 
